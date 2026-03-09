@@ -1,4 +1,3 @@
-````markdown
 # Home Server Dashboard
 
 A web application designed to study and explore the back-end processes of web development. It features a lightweight responsive front-end that communicates with a Python back-end to serve real-time system metrics.
@@ -21,11 +20,11 @@ A web application designed to study and explore the back-end processes of web de
 
 1. **Clone the repository** (if using version control) or navigate to your project directory.
 2. **Create a Virtual Environment** (Recommended):
+
    ```bash
    python3 -m venv venv
    source venv/bin/activate
    ```
-````
 
 3. **Install Dependencies:**
    Install the required Python packages using the provided requirements file:
