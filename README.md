@@ -46,9 +46,3 @@ uvicorn main:app --reload
 
 _The `--reload` flag enables auto-reloading, which is perfect for development._ 3. Open your web browser and navigate to:
 `http://127.0.0.1:8000`
-
-```
-
-Would you like me to suggest any additions to the FastAPI backend, or perhaps help draft the code for the Monitor/Directory status features you have mocked up in your HTML menu?
-
-```
