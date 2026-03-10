@@ -1,7 +1,7 @@
 # Home Server Dashboard
 
-A web application designed to study and explore the back-end processes of web development. It features a lightweight responsive front-end that communicates with a Python back-end to serve real-time system metrics.
-
+A web application i designed for me to study and explore the back-end processes of web development. It features a responsive front-end that communicates with a Python back-end to serve real-time system metrics.
+g
 > **Note:** This project is currently under active development. Some features may contain bugs, but they are being resolved as the project moves forward. It is currently optimized and working on Ubuntu LTS.
 
 ## 🚀 Current Features

@@ -1,6 +1,4 @@
-import psutil
-import battery_health_finder
-
+from utils import battery_status
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI
@@ -19,14 +17,14 @@ def home():
 
 @app.get("/api/battery/stats")
 def battery_stats():
-    battery = psutil.sensors_battery()
-    battery_health = battery_health_finder.battery_health()
-    
+    battery, is_plugged_in = battery_status.battery_charge()
+    battery_health = battery_status.battery_health()
+
     data = {
         "battery_percent": battery.percent if battery else None,
-        "charging": battery.power_plugged if battery else None,
+        "charging": is_plugged_in,
         "seconds_left": battery.secsleft if battery else None,
-        "battery_health":battery_health if battery_health else None,
+        "battery_health": battery_health if battery_health else None,
     }
 
     return data

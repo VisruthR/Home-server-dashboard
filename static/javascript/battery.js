@@ -1,4 +1,4 @@
-//Fetching and processing the battery data from server and feeding it into main js file
+//Fetching and processing the battery data from server and feeding it into main.js file
 
 export async function fetchBatteryData() {
   try {
@@ -7,7 +7,7 @@ export async function fetchBatteryData() {
   } catch (error) {
     console.error("Error fetching battery data:", error);
   }
-};
+}
 
 export function updateBatteryLevel(data) {
   if (data.battery_percent < 100) {
@@ -16,9 +16,9 @@ export function updateBatteryLevel(data) {
   } else {
     document.getElementById("batt-percent").textContent = data.battery_percent;
   }
-};
+}
 
-export function updateBatteryStatus(data){
+export function updateBatteryStatus(data) {
   if (data.charging) {
     document.getElementById("batt-charging").textContent = "Plugged In ⚡";
   } else if (!data.charging && data.battery_percent === 100) {
@@ -26,9 +26,9 @@ export function updateBatteryStatus(data){
   } else {
     document.getElementById("batt-charging").textContent = "On Battery 🔋";
   }
-};
+}
 
-export function updateBatteryTime(data){
+export function updateBatteryTime(data) {
   if (data.charging || data.battery_percent === 100) {
     document.getElementById("batt-time").textContent = "Unlimited (Plugged In)";
   } else if (data.seconds_left && data.seconds_left > 0) {
@@ -42,25 +42,26 @@ export function updateBatteryTime(data){
   } else {
     document.getElementById("batt-time").textContent = "Calculating...";
   }
-};
+}
 
 export function updateBattery(data) {
-  document.getElementById("health-text").textContent = data.battery_health;
+  document.getElementById("health-text").textContent =
+    data.battery_health + "%";
   const battery = data.battery_percent;
   const battery_bottom = data.battery_health;
   const bar = document.getElementById("battery-level");
   const btmBar = document.getElementById("health-level");
-  bar.style.width = battery + "%";
+  bar.style.height = battery + "%";
   btmBar.style.width = battery_bottom + "%";
-};
+}
 
 export function updateBatteryPage(data) {
-  if(!data) return;
+  if (!data) return;
   updateBatteryLevel(data);
   updateBatteryStatus(data);
   updateBatteryTime(data);
   updateBattery(data);
-};
+}
 
 export async function updateBatteryIcon(btnBattery) {
   // default state (if anything fails)
