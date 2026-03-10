@@ -46,71 +46,77 @@ function viewSelector(viewToshow) {
   viewToshow.style.display = "block";
 }
 
-// making the butons work
 btnHome.addEventListener("click", () => {
   viewSelector(viewHome);
 });
 
-btnBattery.addEventListener("click", () => {
+btnBattery.addEventListener("click", async() => {
   viewSelector(viewBattery);
-  fetchBatteryData(); //To get the data as soon as the  button is clicked
+  const fetchData = await fetchBatteryData(); //To get the data as soon as the  button is clicked
+  updateBatteryPage(fetchData)
 });
 
 async function fetchBatteryData() {
   try {
     const response = await fetch("/api/battery/stats");
-    const data = await response.json();
-
-    // 1. Update Battery Percentage
-    if (data.battery_percent < 100) {
-      document.getElementById("batt-percent").textContent = 
-      Math.round(data.battery_percent * 100) / 100;
-    }else{
-      document.getElementById("batt-percent").textContent = data.battery_percent;
-    }
-
-    document.getElementById("health-text").textContent = data.battery_health;
-
-
-    updateBattery(data.battery_percent,data.battery_health);
-
-
-    // If it says it's charging, OR if it's at exactly 100%
-    if (data.charging) {
-      document.getElementById("batt-charging").textContent = "Plugged In ⚡";
-    } else if (!data.charging && data.battery_percent === 100) {
-      document.getElementById("batt-charging").textContent = "Fully Charged 🔌";
-    } else {
-      document.getElementById("batt-charging").textContent = "On Battery 🔋";
-    }
-
-    if (data.charging || data.battery_percent === 100) {
-      document.getElementById("batt-time").textContent =
-        "Unlimited (Plugged In)";
-    } else if (data.seconds_left && data.seconds_left > 0) {
-      // Convert raw seconds into Hours and Minutes
-      let totalMinutes = Math.floor(data.seconds_left / 60);
-      let hours = Math.floor(totalMinutes / 60);
-      let mins = totalMinutes % 60;
-
-      document.getElementById("batt-time").textContent =
-        `${hours}h ${mins}m remaining`;
-    } else {
-      document.getElementById("batt-time").textContent = "Calculating...";
-    }
+    return await response.json();
   } catch (error) {
     console.error("Error fetching battery data:", error);
   }
+};
+
+function updateBatteryPage(data) {
+  if(!data) return;
+  updateBatteryLevel(data);
+  updateBatteryStatus(data);
+  updateBatteryTime(data);
+  updateBattery(data);
 }
 
-function updateBattery(batterypercent,batteryHealth) {
-  const battery = batterypercent;
-  const battery_bottom = batteryHealth;
+function updateBatteryLevel(data) {
+  if (data.battery_percent < 100) {
+    document.getElementById("batt-percent").textContent =
+      Math.round(data.battery_percent * 100) / 100;
+  } else {
+    document.getElementById("batt-percent").textContent = data.battery_percent;
+  }
+};
+
+function updateBatteryStatus(data){
+  if (data.charging) {
+    document.getElementById("batt-charging").textContent = "Plugged In ⚡";
+  } else if (!data.charging && data.battery_percent === 100) {
+    document.getElementById("batt-charging").textContent = "Fully Charged 🔌";
+  } else {
+    document.getElementById("batt-charging").textContent = "On Battery 🔋";
+  }
+};
+
+function updateBatteryTime(data){
+  if (data.charging || data.battery_percent === 100) {
+    document.getElementById("batt-time").textContent = "Unlimited (Plugged In)";
+  } else if (data.seconds_left && data.seconds_left > 0) {
+    // Convert raw seconds into Hours and Minutes
+    let totalMinutes = Math.floor(data.seconds_left / 60);
+    let hours = Math.floor(totalMinutes / 60);
+    let mins = totalMinutes % 60;
+
+    document.getElementById("batt-time").textContent =
+      `${hours}h ${mins}m remaining`;
+  } else {
+    document.getElementById("batt-time").textContent = "Calculating...";
+  }
+};
+
+function updateBattery(data) {
+  document.getElementById("health-text").textContent = data.battery_health;
+  const battery = data.battery_percent;
+  const battery_bottom = data.battery_health;
   const bar = document.getElementById("battery-level");
   const btmBar = document.getElementById("health-level");
   bar.style.width = battery + "%";
   btmBar.style.width = battery_bottom + "%";
-}
+};
 
 setInterval(() => {
   if (viewBattery.style.display === "block") {
