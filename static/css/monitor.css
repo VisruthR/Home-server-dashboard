@@ -1,0 +1,77 @@
+.monitor-area{
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.monitor-chart-container {
+  background: rgba(0, 247, 255, 0.048);
+  position: relative;
+  height: 25vh;
+  width: 55%;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  border-radius: 4px;
+  transition:
+    border-color 0.3s,
+    background 0.3s;
+}
+
+.monitor-stats {
+  flex-direction: column;
+  display: flex;
+  gap: 8px;
+  transform: none;
+  margin: 0;
+  flex: 1;
+}
+
+.monitor-h2 {
+  margin: 0;
+  font-size: 13px;
+  font-family: "Share Tech Mono", monospace;
+  font-weight: normal;
+  color: var(--text-dim);
+  transform: none;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: rgba(0, 245, 255, 0.03);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  transition:
+    border-color 0.3s,
+    background 0.3s;
+}
+
+.monitor-h2:hover {
+  border-color: rgba(0, 245, 255, 0.45);
+  background: rgba(0, 245, 255, 0.07);
+}
+
+.monitor-h2 span {
+  display: block;
+  color: var(--cyan);
+  font-family: "Orbitron", monospace;
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 8px;
+  text-shadow: 0 0 12px var(--cyan-glow);
+  letter-spacing: 0.08em;
+}
+
+.last-monitor-h2 {
+  padding-bottom: 14px;
+}
+
+.temp-stats{
+    display: flex;
+}
+
+.temp-h2{
+    width: 100%;
+}
+
+.last-temp-h2{
+    margin-left: 20px;
+}

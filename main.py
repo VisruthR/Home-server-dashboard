@@ -1,4 +1,5 @@
 from utils import battery_status
+from utils import monitor_status
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI
@@ -27,4 +28,19 @@ def battery_stats():
         "battery_health": battery_health if battery_health else None,
     }
 
+    return data
+
+@app.get("/api/monitor/stats")
+def monitor_stats():
+    cpu, ram = monitor_status.monitor_system()
+    motherboard_temp, cpu_temp  = monitor_status.get_temp()
+    
+    data = {
+        "cpu_usage" : cpu ,
+        "ram_percent" : ram.percent,
+        "ram_used" : (ram.used / (1024**3)),
+        "ram_total" : (ram.total/ (1024**3)),
+        "cpu_temperature" : cpu_temp if cpu_temp is not None else None,
+        "motherboard_temperature" : motherboard_temp if motherboard_temp is not None else None,
+    }
     return data
