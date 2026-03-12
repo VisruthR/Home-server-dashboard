@@ -79,7 +79,8 @@ export function updateRamUsage(data) {
 
 export function updateTemperature(data) {
   document.getElementById("cpu-temp").textContent =
-    data.cpu_temperature !== null ? data.cpu_temperature + " Celsius" : "N/A";
+    data.cpu_temperature !== null ? 
+    Math.round(data.cpu_temperature * 100) / 100 + " Celsius" : "N/A";
 
   document.getElementById("motherboard-temp").textContent =
     data.motherboard_temperature !== null ?
