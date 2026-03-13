@@ -12,9 +12,11 @@ const viewBattery = document.getElementById("view-battery");
 const viewMonitor = document.getElementById("view-monitor");
 const viewFiles = document.getElementById("view-files");
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   battery.updateBatteryIcon(btnBattery);
   monitor.initialiseChart();
+  const exploreData = await files.fetchDirectory();
+  files.renderExplorer(exploreData);
 });
 
 const buttons = [btnHome, btnBattery, btnMonitor, btnFiles];

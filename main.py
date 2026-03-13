@@ -1,3 +1,7 @@
+import os
+
+from pathlib import Path
+from fastapi import HTTPException
 from utils import battery_status, monitor_status , files_status
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -57,3 +61,29 @@ def file_stats():
     }
     
     return data
+
+@app.get("/api/files/explore")
+def explore_files(path: str = None):
+    # Default to user home or root
+    base_path = Path.home() if path is None else Path(path)
+    
+    if not base_path.exists() or not base_path.is_dir():
+        raise HTTPException(status_code=404, detail="Directory not found")
+
+    try:
+        items = []
+        for item in base_path.iterdir():
+            if not item.name.startswith("."):
+                items.append({
+                    "name": item.name,
+                    "is_dir": item.is_dir(),
+                    "path": str(item.absolute())
+                })
+        
+        return {
+            "current_path": str(base_path),
+            "parent": str(base_path.parent) if base_path != base_path.parent else None,
+            "items": sorted(items, key=lambda x: (not x["is_dir"], x["name"].lower()))
+        }
+    except PermissionError:
+        raise HTTPException(status_code=403, detail="Permission denied")
