@@ -214,8 +214,9 @@ section::after {
 
 /* ─── ICONS ─── */
 .bi {
-  margin: 20px -5px;
+  margin: 40px -5px;
   padding: 14px 0;
+  transform: scale(1.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -235,7 +236,7 @@ section::after {
   text-shadow:
     0 0 12px var(--cyan),
     0 0 25px var(--cyan-glow);
-  transform: scale(1.5);
+  transform: scale(2);
 }
 
 .bi.active {
@@ -243,7 +244,7 @@ section::after {
   text-shadow:
     0 0 12px var(--cyan),
     0 0 25px var(--cyan-glow);
-  transform: scale(1.25);
+  transform: scale(1.75);
 }
 
 /* ─── CONTENT ─── */
