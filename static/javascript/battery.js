@@ -9,7 +9,7 @@ export async function fetchBatteryData() {
   }
 }
 
-export function updateBatteryLevel(data) {
+function updateBatteryLevel(data) {
   if (data.battery_percent < 100) {
     document.getElementById("batt-percent").textContent =
       Math.round(data.battery_percent * 100) / 100;
@@ -18,7 +18,7 @@ export function updateBatteryLevel(data) {
   }
 }
 
-export function updateBatteryStatus(data) {
+function updateBatteryStatus(data) {
   if (data.charging) {
     document.getElementById("batt-charging").textContent = "Plugged In ⚡";
   } else if (!data.charging && data.battery_percent === 100) {
@@ -28,7 +28,7 @@ export function updateBatteryStatus(data) {
   }
 }
 
-export function updateBatteryTime(data) {
+function updateBatteryTime(data) {
   if (data.charging || data.battery_percent === 100) {
     document.getElementById("batt-time").textContent = "Unlimited (Plugged In)";
   } else if (data.seconds_left && data.seconds_left > 0) {
@@ -44,7 +44,7 @@ export function updateBatteryTime(data) {
   }
 }
 
-export function updateBattery(data) {
+function updateBattery(data) {
   document.getElementById("health-text").textContent =
     data.battery_health + "%";
   const battery = data.battery_percent;

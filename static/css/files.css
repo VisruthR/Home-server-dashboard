@@ -1,0 +1,132 @@
+.file-area{
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.file {
+  width: 120px;
+  height: 220px;
+  border: 2px solid rgba(0, 245, 255, 0.5);
+  position: relative;
+  border-radius: 12px;
+  transform: none;
+  margin: 0;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow:
+    0 0 20px rgba(0, 245, 255, 0.1),
+    inset 0 0 20px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.file::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 8px,
+    rgba(0, 245, 255, 0.03) 8px,
+    rgba(0, 245, 255, 0.03) 9px
+  );
+  pointer-events: none;
+}
+
+.file-level {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(
+    0deg,
+    var(--cyan) 0%,
+    rgba(0, 245, 255, 0.6) 100%
+  );
+  border-radius: 0 0 10px 10px;
+  transition: height 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.file-level::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: shimmer 2.5s 1s ease-in-out infinite;
+}
+
+.file-percent-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  font-family: "Orbitron", monospace;
+  z-index: 10;
+  text-shadow:
+    0 0 8px rgba(0, 0, 0, 0.9),
+    0 0 16px var(--cyan);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+
+.file-stats {
+  flex-direction: column;
+  display: flex;
+  gap: 8px;
+  transform: none;
+  margin: 0;
+  flex: 1;
+}
+
+.file-h2 {
+  margin: 0;
+  font-size: 13px;
+  font-family: "Share Tech Mono", monospace;
+  font-weight: normal;
+  color: var(--text-dim);
+  transform: none;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: rgba(0, 245, 255, 0.03);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  transition:
+    border-color 0.3s,
+    background 0.3s;
+}
+
+.file-h2:hover {
+  border-color: rgba(0, 245, 255, 0.45);
+  background: rgba(0, 245, 255, 0.07);
+}
+
+.file-h2 span {
+  display: block;
+  color: var(--cyan);
+  font-family: "Orbitron", monospace;
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 8px;
+  text-shadow: 0 0 12px var(--cyan-glow);
+  letter-spacing: 0.08em;
+}
+
+.last-file-h2 {
+  padding-bottom: 14px;
+}

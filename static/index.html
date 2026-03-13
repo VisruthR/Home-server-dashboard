@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/static/css/home.css" />
     <link rel="stylesheet" href="/static/css/battery.css" />
     <link rel="stylesheet" href="/static/css/monitor.css" />
+    <link rel="stylesheet" href="/static/css/files.css" />
   </head>
   <body>
     <section>
@@ -22,7 +23,7 @@
         <i id="home-btn" class="bi bi-house active" title="Home"></i>
         <i id="battery-btn" class="bi bi-battery" title="Power-status"></i>
         <i id="monitor-btn" class="bi bi-laptop" title="Monitor-status"></i>
-        <i class="bi bi-folder" title="Directory-Status"></i>
+        <i id="files-btn" class="bi bi-folder" title="Directory-Status"></i>
         <i class="bi bi-cup-hot" title="Coffee"></i>
       </nav>
 
@@ -104,6 +105,31 @@
                 MotherBoard Temperature<br /><span id="motherboard-temp">Loading...</span>
               </h2>
             </div>
+          </div>
+        </div>
+
+        <div id="view-files" class="page-view" style="display: none">
+          <h1 class="section-headding">File Status</h1>
+          <div class="main-area file-area">
+            <div class="file">
+              <div class="file-level" id="file-level"></div>
+              <span class="file-percent-text" id="file-percent-text">100%</span>
+            </div>
+            <div class="file-stats">
+              <h2 class="file-h2">
+                Total Storage<br /><span id="storage-total">Loading...</span>
+              </h2>
+              <h2 class="file-h2">
+                Storage Used<br /><span id="storage-used">Loading...</span>
+              </h2>
+              <h2 class="file-h2 last-file-h2">
+                Storage Avaliable<br /><span id="storage-free">Loading...</span>
+              </h2>
+            </div>
+          </div>
+
+          <div class="bottom-area bottom-file-area">
+            
           </div>
         </div>
       </div>

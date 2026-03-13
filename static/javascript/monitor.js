@@ -41,7 +41,7 @@ export function initialiseChart() {
   });
 }
 
-export function updateChartData(cpu, ram) {
+function updateChartData(cpu, ram) {
   if (!systemChart) return;
 
   // Push new data to the right side
@@ -64,20 +64,17 @@ export async function fetchMonitorData() {
   }
 }
 
-export function updateCpuPercent(data) {
+function updateCpuRamPercent(data) {
   document.getElementById("cpu-usage").textContent = data.cpu_usage + "%";
-}
-
-export function updateRamPercent(data) {
   document.getElementById("ram-percent").textContent = data.ram_percent + "%";
 }
 
-export function updateRamUsage(data) {
+function updateRamUsage(data) {
   document.getElementById("ram-usage").textContent =
     `(${Math.round(data.ram_used * 100) / 100}Gb / ${Math.round(data.ram_total * 100) / 100}Gb)`;
 }
 
-export function updateTemperature(data) {
+function updateTemperature(data) {
   document.getElementById("cpu-temp").textContent =
     data.cpu_temperature !== null ? 
     Math.round(data.cpu_temperature * 100) / 100 + " Celsius" : "N/A";
@@ -89,8 +86,7 @@ export function updateTemperature(data) {
 
 export function updateMonitorPage(data) {
   if (!data) return;
-  updateCpuPercent(data);
-  updateRamPercent(data);
+  updateCpuRamPercent(data);
   updateRamUsage(data);
   updateChartData(data.cpu_usage, data.ram_percent);
   updateTemperature(data);

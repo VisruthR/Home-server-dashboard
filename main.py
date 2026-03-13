@@ -1,5 +1,4 @@
-from utils import battery_status
-from utils import monitor_status
+from utils import battery_status, monitor_status , files_status
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI
@@ -43,4 +42,18 @@ def monitor_stats():
         "cpu_temperature" : cpu_temp if cpu_temp is not None else None,
         "motherboard_temperature" : motherboard_temp if motherboard_temp is not None else None,
     }
+    return data
+
+@app.get("/api/files/stats")
+def file_stats():
+    total, used, free = files_status.get_storage_info()
+    
+    data = {
+        "storage_total" : files_status.get_size( total ) if total else None,
+        "storage_used" : files_status.get_size(used) if used else None, 
+        "storage_free" : files_status.get_size(free) if free else None,
+        "raw_used" : used if used else None,
+        "raw_free" : free if free else None,
+    }
+    
     return data
