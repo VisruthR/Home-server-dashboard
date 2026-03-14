@@ -4,16 +4,21 @@ from pathlib import Path
 
 def battery_health():
     power_path = Path("/sys/class/power_supply")
+    try:
+        battery_path = next(p for p in power_path.iterdir() if p.name.startswith("BAT"))
 
-    battery_path = next(p for p in power_path.iterdir() if p.name.startswith("BAT"))
+        with open(battery_path / "energy_full" if Path(battery_path / "energy_full").exists() else battery_path / "charge_full") as f:
+            energy_full = int(f.read().strip())
 
-    with open(battery_path / "energy_full") as f:
-        energy_full = int(f.read().strip())
+        with open(battery_path / "energy_full_design" if Path(battery_path / "energy_full_design").exists() else battery_path / "charge_full_design") as f:
+            energy_full_design = int(f.read().strip())
+            
+        return round(((energy_full / energy_full_design) * 100) * 100) / 100
 
-    with open(battery_path / "energy_full_design") as f:
-        energy_full_design = int(f.read().strip())
-
-    return round(((energy_full / energy_full_design) * 100) * 100) / 100
+    except Exception:
+        pass
+    
+    return None
 
 
 def battery_charge():

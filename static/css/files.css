@@ -160,6 +160,10 @@
   color: aliceblue;
   transition: 0.2s;
   font-family: "Share Tech Mono", monospace;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .explorer-item:hover {

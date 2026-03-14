@@ -10,6 +10,8 @@ export async function fetchBatteryData() {
 }
 
 function updateBatteryLevel(data) {
+  if (data.battery_percent === null) return
+
   if (data.battery_percent < 100) {
     document.getElementById("batt-percent").textContent =
       Math.round(data.battery_percent * 100) / 100;
@@ -45,6 +47,9 @@ function updateBatteryTime(data) {
 }
 
 function updateBattery(data) {
+
+  if (data.battery_health === null || data.battery_health === null) return
+
   document.getElementById("health-text").textContent =
     data.battery_health + "%";
   const battery = data.battery_percent;

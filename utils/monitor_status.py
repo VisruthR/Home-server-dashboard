@@ -2,7 +2,7 @@ import psutil
 
 
 def monitor_system():
-    cpu_usage = psutil.cpu_percent(interval=0.5)
+    cpu_usage = psutil.cpu_percent(interval=None)
     ram = psutil.virtual_memory()
     return cpu_usage, ram
 
