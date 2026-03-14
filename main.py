@@ -64,15 +64,22 @@ def file_stats():
 
 @app.get("/api/files/explore")
 def explore_files(path: str = None):
-    # Default to user home or root
-    base_path = Path.home() if path is None else Path(path)
+    SAFE_ROOT = Path.home() 
     
-    if not base_path.exists() or not base_path.is_dir():
+    try:
+        requested_path = SAFE_ROOT if path is None else Path(path).resolve()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid path format")
+
+    if not requested_path.is_relative_to(SAFE_ROOT):
+        raise HTTPException(status_code=403, detail="Access denied: Cannot leave safe root directory")
+   
+    if not requested_path.exists() or not requested_path.is_dir():
         raise HTTPException(status_code=404, detail="Directory not found")
 
     try:
         items = []
-        for item in base_path.iterdir():
+        for item in requested_path.iterdir():
             if not item.name.startswith("."):
                 items.append({
                     "name": item.name,
@@ -81,8 +88,8 @@ def explore_files(path: str = None):
                 })
         
         return {
-            "current_path": str(base_path),
-            "parent": str(base_path.parent) if base_path != base_path.parent else None,
+            "current_path": str(requested_path),
+            "parent": str(requested_path.parent) if requested_path != SAFE_ROOT else None,
             "items": sorted(items, key=lambda x: (not x["is_dir"], x["name"].lower()))
         }
     except PermissionError:
