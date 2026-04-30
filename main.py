@@ -36,15 +36,15 @@ def battery_stats():
 @app.get("/api/monitor/stats")
 def monitor_stats():
     cpu, ram = monitor_status.monitor_system()
-    motherboard_temp, cpu_temp  = monitor_status.get_temp()
-    
+    sent, recieve = monitor_status.monitor_network()
+
     data = {
         "cpu_usage" : cpu ,
         "ram_percent" : ram.percent,
         "ram_used" : (ram.used / (1024**3)),
         "ram_total" : (ram.total/ (1024**3)),
-        "cpu_temperature" : cpu_temp if cpu_temp is not None else None,
-        "motherboard_temperature" : motherboard_temp if motherboard_temp is not None else None,
+        "net_sent" : sent,
+        "net_recieve" : recieve
     }
     return data
 

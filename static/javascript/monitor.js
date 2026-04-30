@@ -69,19 +69,14 @@ function updateCpuRamPercent(data) {
   document.getElementById("ram-percent").textContent = data.ram_percent + "%";
 }
 
+function updateNetworkUsage(data) {
+  document.getElementById("cpu-temp").textContent = data.net_sent;
+  document.getElementById("motherboard-temp").textContent = data.net_recieve;
+}
+
 function updateRamUsage(data) {
   document.getElementById("ram-usage").textContent =
     `(${Math.round(data.ram_used * 100) / 100}Gb / ${Math.round(data.ram_total * 100) / 100}Gb)`;
-}
-
-function updateTemperature(data) {
-  document.getElementById("cpu-temp").textContent =
-    data.cpu_temperature !== null ? 
-    Math.round(data.cpu_temperature * 100) / 100 + " Celsius" : "N/A";
-
-  document.getElementById("motherboard-temp").textContent =
-    data.motherboard_temperature !== null ?
-    Math.round(data.motherboard_temperature * 100) / 100 + " Celsius" : "N/A";
 }
 
 export function updateMonitorPage(data) {
@@ -89,5 +84,5 @@ export function updateMonitorPage(data) {
   updateCpuRamPercent(data);
   updateRamUsage(data);
   updateChartData(data.cpu_usage, data.ram_percent);
-  updateTemperature(data);
+  updateNetworkUsage(data);
 }

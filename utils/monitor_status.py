@@ -1,32 +1,28 @@
 import psutil
-
+import time
 
 def monitor_system():
     cpu_usage = psutil.cpu_percent(interval=None)
     ram = psutil.virtual_memory()
     return cpu_usage, ram
 
+def format_speed(bytes_per_sec):
+    if bytes_per_sec < 1024:
+        return f"{bytes_per_sec:.2f} B/s"
+    elif bytes_per_sec < (1024 * 1024):
+        return f"{(bytes_per_sec / 1024):.2f} KB/s"
+    else:
+        return f"{(bytes_per_sec / (1024 * 1024)):.2f} MB/s"
 
-def get_temp():
-    overall_cpu = None
-    system_temp = None
-    
-    temps = psutil.sensors_temperatures()
-    
-    if not temps:
-        return None, None
+def monitor_network():
+    net_start = psutil.net_io_counters()
+    time.sleep(1) 
+    net_end = psutil.net_io_counters()
 
+    raw_sent = net_end.bytes_sent - net_start.bytes_sent
+    raw_recv = net_end.bytes_recv - net_start.bytes_recv
 
-    # Common Linux CPU sensor names: 'coretemp' (Intel), 'k10temp' (AMD), 'cpu_thermal' (Raspberry Pi/ARM)
-    cpu_sensor_names = ['coretemp', 'k10temp', 'cpu_thermal']
-    for name in cpu_sensor_names:
-        if name in temps:
-            # The first entry in the CPU list is usually the 'Package' (overall CPU temp)
-            overall_cpu = temps[name][0].current
-            break
+    up_speed = format_speed(raw_sent)
+    down_speed = format_speed(raw_recv)
 
-    # 'acpitz' is a common ACPI thermal zone representing ambient system temp
-    if 'acpitz' in temps:
-        system_temp = temps['acpitz'][0].current
-
-    return system_temp, overall_cpu
+    return up_speed, down_speed

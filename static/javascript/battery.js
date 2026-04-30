@@ -47,17 +47,20 @@ function updateBatteryTime(data) {
 }
 
 function updateBattery(data) {
+  if (data.battery_percent !== null) {
+    const bar = document.getElementById("battery-level");
+    bar.style.height = data.battery_percent + "%";
+  }
 
-  if (data.battery_health === null || data.battery_health === null) return
+  if (data.battery_health !== null) {
+    document.getElementById("health-text").textContent =
+      data.battery_health + "%";
 
-  document.getElementById("health-text").textContent =
-    data.battery_health + "%";
-  const battery = data.battery_percent;
-  const battery_bottom = data.battery_health;
-  const bar = document.getElementById("battery-level");
-  const btmBar = document.getElementById("health-level");
-  bar.style.height = battery + "%";
-  btmBar.style.width = battery_bottom + "%";
+    const btmBar = document.getElementById("health-level");
+    btmBar.style.width = data.battery_health + "%";
+  } else {
+    document.getElementById("health-text").textContent = "ERR";
+  }
 }
 
 export function updateBatteryPage(data) {
